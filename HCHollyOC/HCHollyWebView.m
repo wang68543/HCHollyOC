@@ -14,6 +14,8 @@
 
 +(void)initializtionWithAccount:(NSString*)account chatId:(NSString*)chatId param:(NSDictionary<NSString *, id>*)param cb:(void(^)(BOOL iss, NSString *mess))cb{
     NSLog(@"%@", account);
+    
+    
 }
 
 @end

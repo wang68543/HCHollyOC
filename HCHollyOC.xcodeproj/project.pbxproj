@@ -10,6 +10,9 @@
 		9B2C930222BAC4EB00AA4E6D /* HCHollyOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C930122BAC4EB00AA4E6D /* HCHollyOC.m */; };
 		9B2C930322BAC4EB00AA4E6D /* HCHollyOC.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B2C930022BAC4EB00AA4E6D /* HCHollyOC.h */; };
 		9B2C933422BAD47500AA4E6D /* HCHollyWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C933322BAD47500AA4E6D /* HCHollyWebView.m */; };
+		9B2C933722BAD6DB00AA4E6D /* HCHollyRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C933622BAD6DB00AA4E6D /* HCHollyRecord.m */; };
+		9B2C933A22BAD6E800AA4E6D /* HCAliyunOss.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C933922BAD6E800AA4E6D /* HCAliyunOss.m */; };
+		9B2C933D22BAD75900AA4E6D /* HCHollyLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C933C22BAD75900AA4E6D /* HCHollyLocation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +34,12 @@
 		9B2C930122BAC4EB00AA4E6D /* HCHollyOC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCHollyOC.m; sourceTree = "<group>"; };
 		9B2C933222BAD47500AA4E6D /* HCHollyWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCHollyWebView.h; sourceTree = "<group>"; };
 		9B2C933322BAD47500AA4E6D /* HCHollyWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCHollyWebView.m; sourceTree = "<group>"; };
+		9B2C933522BAD6DB00AA4E6D /* HCHollyRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCHollyRecord.h; sourceTree = "<group>"; };
+		9B2C933622BAD6DB00AA4E6D /* HCHollyRecord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCHollyRecord.m; sourceTree = "<group>"; };
+		9B2C933822BAD6E800AA4E6D /* HCAliyunOss.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCAliyunOss.h; sourceTree = "<group>"; };
+		9B2C933922BAD6E800AA4E6D /* HCAliyunOss.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCAliyunOss.m; sourceTree = "<group>"; };
+		9B2C933B22BAD75900AA4E6D /* HCHollyLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCHollyLocation.h; sourceTree = "<group>"; };
+		9B2C933C22BAD75900AA4E6D /* HCHollyLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCHollyLocation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +76,12 @@
 				9B2C930122BAC4EB00AA4E6D /* HCHollyOC.m */,
 				9B2C933222BAD47500AA4E6D /* HCHollyWebView.h */,
 				9B2C933322BAD47500AA4E6D /* HCHollyWebView.m */,
+				9B2C933522BAD6DB00AA4E6D /* HCHollyRecord.h */,
+				9B2C933622BAD6DB00AA4E6D /* HCHollyRecord.m */,
+				9B2C933822BAD6E800AA4E6D /* HCAliyunOss.h */,
+				9B2C933922BAD6E800AA4E6D /* HCAliyunOss.m */,
+				9B2C933B22BAD75900AA4E6D /* HCHollyLocation.h */,
+				9B2C933C22BAD75900AA4E6D /* HCHollyLocation.m */,
 			);
 			path = HCHollyOC;
 			sourceTree = "<group>";
@@ -129,6 +144,9 @@
 			files = (
 				9B2C930222BAC4EB00AA4E6D /* HCHollyOC.m in Sources */,
 				9B2C933422BAD47500AA4E6D /* HCHollyWebView.m in Sources */,
+				9B2C933A22BAD6E800AA4E6D /* HCAliyunOss.m in Sources */,
+				9B2C933722BAD6DB00AA4E6D /* HCHollyRecord.m in Sources */,
+				9B2C933D22BAD75900AA4E6D /* HCHollyLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
