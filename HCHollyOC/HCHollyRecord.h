@@ -14,6 +14,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(HCHollyRecord*)manager;
 +(void)showlog:(BOOL)iss;
+
+
+-(void)onStart:(void(^)(void))b;
+-(void)onStop:(void(^)(void))b;
+-(void)onCancel:(void(^)(void))b;
+-(void)onUpload:(void(^)(BOOL iss, NSString *mess))b;
+-(void)onFailed:(void(^)(NSString *mess))b;
+
+-(void)stop;
+-(void)start;
+-(void)cancel;
+
 @end
 
 NS_ASSUME_NONNULL_END
