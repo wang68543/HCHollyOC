@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HCHollyWebView.h"
 
 @interface HCHollyOC : NSObject
 
