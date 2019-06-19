@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(void)initializtionWithAccount:(NSString*)account chatId:(NSString*)chatId param:(NSDictionary<NSString *, id>*)param cb:(void(^)(BOOL iss, NSString *mess))cb;
 
++(void)showlog:(BOOL)iss;
+
 @end
 
 NS_ASSUME_NONNULL_END

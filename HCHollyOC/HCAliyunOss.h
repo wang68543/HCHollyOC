@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HCAliyunOss : NSObject
-
++(HCAliyunOss*)share;
+-(void)uploadC5FileData:(NSData*)fileData done:(void(^)(BOOL iss, NSString* resu))done;
 @end
 
 NS_ASSUME_NONNULL_END

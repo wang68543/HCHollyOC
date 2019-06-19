@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HCHollyRecord : NSObject
 
++(HCHollyRecord*)manager;
++(void)showlog:(BOOL)iss;
 @end
 
 NS_ASSUME_NONNULL_END
