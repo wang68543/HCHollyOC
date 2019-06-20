@@ -13,10 +13,11 @@
 
 @interface HCHollyRecord(){
     NSTimer *timer;
-    AVAudioRecorder *recoder;
+    
     NSString *recordPath;
 }
 
+@property(nonatomic, strong) AVAudioRecorder *recoder;
 @property(nonatomic, assign) void(^doStart)(void);
 @property(nonatomic, assign) void(^doStop)(void);
 @property(nonatomic, assign) void(^doCancel)(void);
@@ -58,6 +59,7 @@ static id _instance = nil;
     self.doCancel = b;
 }
 -(void)onUpload:(void(^)(BOOL iss, NSString *mess))b{
+//    NSLog(@"on upload fffff");
     self.doUpload = b;
 }
 -(void)onFailed:(void(^)(NSString *mess))b{
@@ -83,27 +85,72 @@ static id _instance = nil;
     }];
     
 }
+- (NSMutableDictionary *)getAudioSetting
+{
+    NSMutableDictionary *dicM = [NSMutableDictionary dictionary];
+    //设置录音格式
+    [dicM setObject:@(kAudioFormatMPEG4AAC) forKey:AVFormatIDKey];
+    //设置录音采样率，8000是电话采样率，对于一般录音已经够了
+    [dicM setObject:@(8000) forKey:AVSampleRateKey];
+    //设置通道,这里采用单声道
+    [dicM setObject:@(1) forKey:AVNumberOfChannelsKey];
+    //每个采样点位数,分为8、16、24、32
+    [dicM setObject:@(8) forKey:AVLinearPCMBitDepthKey];
+    //是否使用浮点数采样
+    [dicM setObject:@(YES) forKey:AVLinearPCMIsFloatKey];
+    //....其他设置等
+    return dicM;
+}
 -(void)startRecord{
     NSString *fstr = @"获取录音权限失败";
     AVAudioSession *session = AVAudioSession.sharedInstance;
+    if(![session setCategory: AVAudioSessionCategoryPlayAndRecord error:nil]){
+        NSLog(@"111");
+    }
+    if(![session setActive:YES error:nil]){
+        NSLog(@"222");
+    }
     
-    if (recoder != nil && recoder.isRecording) {
+    if (_recoder != nil && _recoder.isRecording) {
         return;
     }
 //    NSError *aserr = nil;
     @try {
-        [session setCategory: AVAudioSessionCategoryPlayAndRecord error:nil];
-        [session setActive:YES error:nil];
+        NSError *err;
         NSDictionary *set = @{
-                              AVSampleRateKey: @8000,
-                              AVFormatIDKey: [NSNumber numberWithInt: kAudioFormatLinearPCM],
-                                  AVEncoderAudioQualityKey: @(AVAudioQualityHigh)
+//                              AVSampleRateKey: @(8000),
+//                              AVFormatIDKey: @(kAudioFormatLinearPCM),
+//                                  AVEncoderAudioQualityKey: @(AVAudioQualityHigh)
+                              AVSampleRateKey: [NSNumber numberWithFloat: 44100.0],
+                              AVLinearPCMBitDepthKey:[NSNumber numberWithInt:16],
+                            AVFormatIDKey: [NSNumber numberWithInt: kAudioFormatLinearPCM],
+                            
                               };
+        NSDictionary *settings =@{
+                                  // 音频格式
+                                  AVFormatIDKey:@(kAudioFormatLinearPCM),
+                                  // 采样率
+                                  AVSampleRateKey:@8000.0f,
+                                  // 通道数
+                                  AVNumberOfChannelsKey:@1,
+                                  // 位深
+                                  AVEncoderBitDepthHintKey:@16,
+                                  // 音频质量
+                                  AVEncoderAudioQualityKey:@(AVAudioQualityMedium)
+                                  };
         recordPath = [self getFilePath];
         NSURL *url = [NSURL URLWithString:recordPath];
-        recoder = [[AVAudioRecorder alloc] initWithURL:url settings:set error:nil];
-        [recoder prepareToRecord];
-        [recoder recordForDuration:120];
+        self.recoder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error: &err];
+        
+        
+        if (err) {
+            NSLog(@"创建录音失败%@",err.localizedDescription);
+        }
+        
+        [_recoder prepareToRecord];
+//        [recoder recordForDuration:120];
+        [_recoder record];
+        
         [self doStart];
         [self dprint:@"record start"];
         
@@ -121,58 +168,17 @@ static id _instance = nil;
     } @finally {
         
     }
-//    let fstr = "获取录音权限失败"
-//    do{
-//        let session = AVAudioSession.sharedInstance()
-//        if self.recoder != nil, self.recoder!.isRecording {
-//            dprint("正在录音中")
-//            return
-//        }
-//        //            try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
-//        try session.setCategory(AVAudioSession.Category.playAndRecord)
-//        try session.setActive(true)
-//
-//        let set = [
-//                   AVSampleRateKey: NSNumber(value: 8000),
-//                   AVFormatIDKey: NSNumber(value: kAudioFormatLinearPCM),
-//                   AVEncoderAudioQualityKey: NSNumber(value: AVAudioQuality.high.rawValue)
-//                   ]
-//        self.recordPath = self.getFilePath()
-//        let url = URL(string: self.recordPath)
-//        dprint(recordPath)
-//        recoder = try AVAudioRecorder(url: url!, settings: set)
-//        recoder?.prepareToRecord()
-//        //            recoder?.record()
-//        recoder?.record(forDuration: 120)
-//        doStart?()
-//        dprint("开始录音")
-//
-//        if timer != nil {
-//            self.timer.invalidate()
-//            self.timer = nil
-//        }
-//        //            self.timer = Timer(fireAt: Date(timeIntervalSinceNow: 10), interval: 5, target: self, selector: #selector(recordTimeLimit), userInfo: nil, repeats: false)
-//
-//        let cpath = recordPath
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 60) {
-//            self.recordTimeLimit(onlyUrl: cpath)
-//        }
-//    }
-//    catch{
-//        dprint("录音初始化失败")
-//        self.doFailed?(fstr)
-//    }
 }
 -(void)stop{
-    
-    if (recoder == nil) {
+//    NSLog(@"-->stop");
+    if (_recoder == nil) {
         [self dprint:@"record not start"];
         return;
     }
-    if (recoder.isRecording) {
-        [recoder stop];
+    if (_recoder.isRecording) {
+        [_recoder stop];
         [AVAudioSession.sharedInstance setActive:NO error:nil];
-        recoder = nil;
+        _recoder = nil;
         [self doStop];
         [self uploadRecord:recordPath];
         [self dprint:@"record stop"];
@@ -180,30 +186,39 @@ static id _instance = nil;
     
 }
 -(void)cancel{
-    if (recoder == nil) {
+//    NSLog(@"-->cancel");
+    if (_recoder == nil) {
         [self dprint:@"record not start"];
         return;
     }
-    if (recoder.isRecording) {
-        [recoder stop];
+    if (_recoder.isRecording) {
+        [_recoder stop];
         [AVAudioSession.sharedInstance setActive:NO error:nil];
-        recoder = nil;
+        _recoder = nil;
         [self doCancel];
         [self dprint:@"record cancel"];
     }
 }
 -(void)uploadRecord:(NSString*)filePath{
+//    NSLog(@"-->uploadRecord");
     
 //    NSString *fName = filePath.lastPathComponent;
     NSURL *url = [NSURL fileURLWithPath:filePath];
     NSData *fileData = [NSData dataWithContentsOfURL:url];
+//    NSLog(@"%@",fileData);
     if (fileData != nil) {
         __weak HCHollyRecord *wself = self;
         [[HCAliyunOss share] uploadC5FileData:fileData done:^(BOOL iss, NSString * _Nonnull resu) {
             [wself dprint:resu];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                wself.doUpload(iss, resu);
-            });
+            if (!iss) {
+                [wself dprint:resu];
+            }
+            else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+//                    self.doUpload(iss, resu);
+                    [wself.delegate onUpload:iss mess:resu];
+                });
+            }
         }];
     }
 }
@@ -221,7 +236,9 @@ static id _instance = nil;
 -(NSString*)getFilePath{
     NSString *uuid = [NSUUID UUID].UUIDString;
     NSString *cachePath = NSTemporaryDirectory();
+    
     NSString *temp = [NSString stringWithFormat:@"%@%@.wav",cachePath, uuid];
+//    NSString *temp = [NSString stringWithFormat:@"%@%@.caf",cachePath, uuid];
     [self dprint: temp];
     return temp;
 }

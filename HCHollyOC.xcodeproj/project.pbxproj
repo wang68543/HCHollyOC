@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36852F5722BB18280039FEBC /* HCHollyWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B2C933222BAD47500AA4E6D /* HCHollyWebView.h */; };
+		36852F5822BB18280039FEBC /* HCHollyRecord.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B2C933522BAD6DB00AA4E6D /* HCHollyRecord.h */; };
+		36852F5922BB18280039FEBC /* HCAliyunOss.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B2C933822BAD6E800AA4E6D /* HCAliyunOss.h */; };
+		36852F5A22BB18280039FEBC /* HCHollyLocation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B2C933B22BAD75900AA4E6D /* HCHollyLocation.h */; };
 		9B2C930222BAC4EB00AA4E6D /* HCHollyOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C930122BAC4EB00AA4E6D /* HCHollyOC.m */; };
 		9B2C930322BAC4EB00AA4E6D /* HCHollyOC.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B2C930022BAC4EB00AA4E6D /* HCHollyOC.h */; };
 		9B2C933422BAD47500AA4E6D /* HCHollyWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2C933322BAD47500AA4E6D /* HCHollyWebView.m */; };
@@ -22,6 +26,10 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				36852F5722BB18280039FEBC /* HCHollyWebView.h in CopyFiles */,
+				36852F5822BB18280039FEBC /* HCHollyRecord.h in CopyFiles */,
+				36852F5922BB18280039FEBC /* HCAliyunOss.h in CopyFiles */,
+				36852F5A22BB18280039FEBC /* HCHollyLocation.h in CopyFiles */,
 				9B2C930322BAC4EB00AA4E6D /* HCHollyOC.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

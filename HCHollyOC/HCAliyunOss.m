@@ -32,11 +32,13 @@ static HCAliyunOss *_instance = nil;
     NSData *body = fileData;
     NSURL *url = [NSURL URLWithString:_uploadAudioUrl];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    req.HTTPMethod = @"POST";
     req.HTTPBody = body;
+//    NSLog(@"%@",req);
     NSURLSessionDataTask *task = [NSURLSession.sharedSession dataTaskWithRequest:req completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"NSURLSessionDataTask %@",error);
-            done(false, @"");
+            done(false, @"holly录音上传失败");
             return;
         }
         else{

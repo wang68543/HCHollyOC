@@ -10,11 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol HCHollyRecordDelegate <NSObject>
+
+-(void)onUpload:(BOOL)iss mess:(NSString*)mess;
+
+@end
+
 @interface HCHollyRecord : NSObject
 
 +(HCHollyRecord*)manager;
 +(void)showlog:(BOOL)iss;
 
+@property(nonatomic, weak) id<HCHollyRecordDelegate> delegate;
 
 -(void)onStart:(void(^)(void))b;
 -(void)onStop:(void(^)(void))b;

@@ -9,8 +9,10 @@
 #import "HCHollyWebView.h"
 #import <UIKit/UIKit.h>
 #import "HCHollyRecord.h"
+#import "HCHollyLocation.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface HCHollyWebView()<WKScriptMessageHandler>
+@interface HCHollyWebView()<WKScriptMessageHandler, HCHollyRecordDelegate>
 
 @property(nonatomic, strong) WKWebView *webview;
 @property(nonatomic, strong) UIProgressView *progress;
@@ -47,7 +49,8 @@ static NSString *c6Url = @"";
 
             NSDictionary *dc = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingAllowFragments error:nil];
             if (dc != nil) {
-                NSInteger succ = dc[@"success"];
+                NSInteger succ = [dc[@"success"] integerValue];
+                
                 if (succ == 1) {
                     NSString *url = dc[@"interface"];
                     if ([url containsString:@"?"]) {
@@ -59,9 +62,9 @@ static NSString *c6Url = @"";
                     NSLog(@"%@",c6Url);
                     cb(true, @"初始化holly成功");
                 }
-                NSLog(@"%@",dc);
+//                NSLog(@"%@",dc);
             }
-            NSLog(@"%@",dStr);
+//            NSLog(@"%@",dStr);
         }
     }];
     [task resume];
@@ -145,8 +148,17 @@ static NSString *c6Url = @"";
             
         }];
     }];
+    HCHollyRecord.manager.delegate = self;
     
-    
+}
+-(void)onUpload:(BOOL)iss mess:(NSString *)mess{
+    NSString *jstr = [NSString stringWithFormat:@"hollyRecordUpload('%@')", mess];
+    if (!iss) {
+        jstr = @"hollyRecordFailed()";
+    }
+    [self.webview evaluateJavaScript:jstr completionHandler:^(id _Nullable obj, NSError * _Nullable error) {
+        
+    }];
 }
 
 
@@ -161,9 +173,19 @@ static NSString *c6Url = @"";
         [HCHollyRecord.manager cancel];
     }
     else if ([message.name isEqualToString:@"getLocation"]){
-        [HCHollyRecord.manager stop];
+        __weak HCHollyWebView *wself = self;
+        [HCHollyLocation.share getLocationBack:^(CLLocation * _Nonnull loc) {
+            if (loc == nil) {
+                return;
+            }
+            NSString *js = [NSString stringWithFormat:@"hollyGetLocation('%f','%f')", loc.coordinate.latitude, loc.coordinate.longitude];
+            [wself.webview evaluateJavaScript:js completionHandler:nil];
+        } failed:^(NSError * _Nonnull err) {
+            NSString *js = [NSString stringWithFormat:@"hollyGetLocationFailed('%@')", err.localizedDescription];
+            [wself.webview evaluateJavaScript:js completionHandler:nil];
+        }];
     }
-    
+    NSLog(@"%@",message.name);
     
 //case "getLocation":
 //    weak var wself = self
