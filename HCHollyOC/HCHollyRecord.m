@@ -154,17 +154,18 @@ static id _instance = nil;
         [self doStart];
         [self dprint:@"record start"];
         
-    } @catch (NSException *exception) {
-        NSLog(@"record auth faild");
         if (timer != nil) {
             [timer invalidate];
             timer = nil;
         }
         NSString *cpath = recordPath;
         __weak HCHollyRecord *wself = self;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [wself recordTimeLimit: cpath];
         });
+    } @catch (NSException *exception) {
+        NSLog(@"record auth faild");
+        self.doFailed(@"record 初始化 faild");
     } @finally {
         
     }

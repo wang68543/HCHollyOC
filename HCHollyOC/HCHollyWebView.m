@@ -185,7 +185,7 @@ static NSString *c6Url = @"";
             [wself.webview evaluateJavaScript:js completionHandler:nil];
         }];
     }
-    NSLog(@"%@",message.name);
+//    NSLog(@"%@",message.name);
     
 //case "getLocation":
 //    weak var wself = self
