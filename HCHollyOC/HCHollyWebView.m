@@ -27,8 +27,8 @@ static NSString *c6Url = @"";
 }
 +(void)initializtionWithAccount:(NSString*)account chatId:(NSString*)chatId param:(NSDictionary<NSString *, id>*)param cb:(void(^)(BOOL iss, NSString *mess))cb{
 //    NSLog(@"%@", account);
-    NSString *urlPath = [NSString stringWithFormat: @"http://123.56.20.159:3000/commonInte?md5=81f0e1f0-32df-11e3-a2e6-1d21429e5f46&flag=401&accountId=%@&chatId=%@",account, chatId];
-//    NSString *urlPath = [NSString stringWithFormat: @"http://a1.7x24cc.com/commonInte?md5=81f0e1f0-32df-11e3-a2e6-1d21429e5f46&flag=401&accountId=%@&chatId=%@",account, chatId];
+//    NSString *urlPath = [NSString stringWithFormat: @"http://123.56.20.159:3000/commonInte?md5=81f0e1f0-32df-11e3-a2e6-1d21429e5f46&flag=401&accountId=%@&chatId=%@",account, chatId];
+    NSString *urlPath = [NSString stringWithFormat: @"http://a1.7x24cc.com/commonInte?md5=81f0e1f0-32df-11e3-a2e6-1d21429e5f46&flag=401&accountId=%@&chatId=%@",account, chatId];
 
     NSString *pars = @"";
     for (NSString *key in param) {
@@ -56,8 +56,9 @@ static NSString *c6Url = @"";
                     else{
                         c6Url = [NSString stringWithFormat:@"%@?%@",url,pars];
                     }
+                    NSLog(@"%@",c6Url);
+                    cb(true, @"初始化holly成功");
                 }
-                cb(true, @"初始化holly成功");
                 NSLog(@"%@",dc);
             }
             NSLog(@"%@",dStr);

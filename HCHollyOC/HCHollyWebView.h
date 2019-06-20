@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)showlog:(BOOL)iss;
 
 -(WKWebView*)getC6WebViewWithFrame:(CGRect)frame;
+-(void)removeHandler;
 
 @end
 
