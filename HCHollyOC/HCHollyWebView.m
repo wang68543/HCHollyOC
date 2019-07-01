@@ -61,10 +61,12 @@ static NSString *c6Url = @"";
                     }
                     NSLog(@"%@",c6Url);
                     cb(true, @"初始化holly成功");
+                    return;
                 }
 //                NSLog(@"%@",dc);
             }
 //            NSLog(@"%@",dStr);
+            cb(false, @"");
         }
     }];
     [task resume];
@@ -80,7 +82,7 @@ static NSString *c6Url = @"";
     WKWebViewConfiguration *conf = [[WKWebViewConfiguration alloc] init];
     self.webview = [[WKWebView alloc] initWithFrame:frame configuration:conf];
 //    _webview.UIDelegate = self;
-//    _webview.navigationDelegate = self;
+    _webview.navigationDelegate = self;
     
     [self addHandler];
     [self loadUrl: c6Url];
@@ -208,6 +210,20 @@ static NSString *c6Url = @"";
 //default:
 //    print("没有匹配到")
 //}
+}
+
+@end
+
+@implementation HCHollyWebView (WKNavigationDelegate)
+
+-(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    NSLog(@"didFailNavigation -> %@",error);
+}
+-(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    NSLog(@"didFailProvisionalNavigation -> %@",error);
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    NSLog(@"didFinishNavigation -> %@", webView);
 }
 
 @end
