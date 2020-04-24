@@ -45,7 +45,7 @@ static NSString *c6Url = @"";
             return;
         }
         else{
-            NSString *dStr = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
+//            NSString *dStr = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
 
             NSDictionary *dc = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingAllowFragments error:nil];
             if (dc != nil) {
@@ -85,7 +85,7 @@ static NSString *c6Url = @"";
     _webview.navigationDelegate = self;
     
     [self addHandler];
-    [self loadUrl: c6Url];
+//    [self loadUrl: c6Url];
     
     return _webview;
     
