@@ -35,7 +35,7 @@ static HCHollyLocation *_instance = nil;
 }
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorizedAlways) {
-        [manager startUpdatingLocation];
+//        [manager startUpdatingLocation];
     }
     else{
         NSLog(@"没有定位权限");
