@@ -85,12 +85,22 @@ static NSString *c6Url = @"";
     _webview.navigationDelegate = self;
     
     [self addHandler];
-//    [self loadUrl: c6Url];
+    [self loadUrl: c6Url];
     
     return _webview;
     
 }
-
+-(WKWebView*)getC6WebViewUnLoadWithFrame:(CGRect)frame{
+    WKWebViewConfiguration *conf = [[WKWebViewConfiguration alloc] init];
+    self.webview = [[WKWebView alloc] initWithFrame:frame configuration:conf];
+//    _webview.UIDelegate = self;
+    _webview.navigationDelegate = self;
+    
+    [self addHandler]; 
+    
+    return _webview;
+    
+}
 -(void)addHandler{
     [_webview.configuration.userContentController addScriptMessageHandler:self name:@"recordStart"];
     [_webview.configuration.userContentController addScriptMessageHandler:self name:@"recordStop"];
